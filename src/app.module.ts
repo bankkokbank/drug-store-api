@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import databaseConfig from './config/database.config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { StoreModule } from './store/store.module';
+import { MapModule } from './map/map.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { StoreModule } from './store/store.module';
       inject: [ConfigService],
     }),
     StoreModule,
+    MapModule,
   ],
   controllers: [AppController],
   providers: [AppService],
