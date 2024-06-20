@@ -1,5 +1,6 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { MapService } from './map.service';
+import { MapLocationDto } from './dto/map.dto';
 
 @Controller('map')
 export class MapController {
@@ -11,9 +12,8 @@ export class MapController {
   }
 
   @Get('search/location')
-  searchByLocation(@Query('lat') lat: string, @Query('long') long: string) {
-    console.log(lat, long);
-    return this.mapService.searchByLocation(lat, long);
+  searchByLocation(@Query() query: MapLocationDto) {
+    return this.mapService.searchByLocation(query.location);
   }
   @Get('details')
   detail(@Query('placeId') placeId: string) {
