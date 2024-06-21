@@ -70,7 +70,6 @@ export class StoreService {
     lat2: number,
     lon2: number,
   ): number {
-    console.log(lat1, lon1, lat2, lon2);
     const R = 6371; // Radius of the earth in km
     const dLat = this.deg2rad(lat2 - lat1);
     const dLon = this.deg2rad(lon2 - lon1);
