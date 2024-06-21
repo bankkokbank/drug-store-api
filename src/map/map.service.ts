@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
+import { LocationDto, MapLocationDto } from './dto/map.dto';
 
 @Injectable()
 export class MapService {
@@ -17,7 +18,7 @@ export class MapService {
 
       return response.data;
     } catch (error) {
-      Logger.error({ cmd: 'search', error: error });
+      Logger.error({ cmd: 'MapService.search', error: error });
       if (error.response) {
         throw new Error(error.response.message);
       }
@@ -25,12 +26,14 @@ export class MapService {
     }
   }
 
-  async searchByLocation(lat: string, long: string) {
+  async searchByLocation(location: LocationDto) {
     try {
+      const locationObj = JSON.parse(JSON.parse(JSON.stringify(location)));
+
       const instance = await this.createInstance();
       const response = await instance.get(`/geocode/json`, {
         params: {
-          latlng: `${lat},${long}`,
+          latlng: `${locationObj.lat},${locationObj.long}`,
           key: process.env.GOOGLE_MAPS_API_KEY,
           language: 'th',
         },
@@ -38,7 +41,7 @@ export class MapService {
 
       return response.data;
     } catch (error) {
-      Logger.error({ cmd: 'search', error: error });
+      Logger.error({ cmd: 'MapService.searchByLocation', error: error });
       if (error.response) {
         throw new Error(error.response.message);
       }
@@ -59,7 +62,7 @@ export class MapService {
       });
       return response.data;
     } catch (error) {
-      Logger.error({ cmd: 'detail', error: error });
+      Logger.error({ cmd: 'MapService.detail', error: error });
       if (error.response) {
         throw new Error(error.response.message);
       }

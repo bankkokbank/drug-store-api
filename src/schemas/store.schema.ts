@@ -20,7 +20,7 @@ export class Store {
   @Prop()
   site_tel: string;
 
-  @Prop()
+  @Prop({ type: Object })
   location: { type: string; coordinates: string[] };
 
   @Prop()
@@ -31,3 +31,4 @@ export class Store {
 }
 
 export const StoreSchema = SchemaFactory.createForClass(Store);
+StoreSchema.index({ location: '2dsphere' });
